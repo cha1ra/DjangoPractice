@@ -18,6 +18,10 @@ class HelloView(TemplateView):
 
     def post(self, request):
         ch = request.POST.getlist('choice')
-        self.params['result'] = 'you selected:' + str(ch) + '.'
+        result = '<ul>'
+        for item in ch:
+            result += '<li>' + item + '</li>'
+        result += '</ul>'
+        self.params['result'] = result
         self.params['form'] = HelloForm(request.POST)
         return render(request, 'hello/index.html', self.params)
